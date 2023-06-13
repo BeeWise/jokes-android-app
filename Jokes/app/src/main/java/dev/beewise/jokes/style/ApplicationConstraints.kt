@@ -1,3 +1,6 @@
+package dev.beewise.jokes.style
+
+import dev.beewise.jokes.extensions.dp
 import kotlin.math.roundToInt
 
 class ApplicationConstraints {

@@ -1,4 +1,7 @@
+package dev.beewise.jokes.operations.base.operations
+
 import android.content.res.AssetManager
+import dev.beewise.jokes.managers.ContextManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

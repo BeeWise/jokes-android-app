@@ -1,3 +1,5 @@
+package dev.beewise.jokes.managers
+
 import android.content.Context
 import java.lang.ref.WeakReference
 

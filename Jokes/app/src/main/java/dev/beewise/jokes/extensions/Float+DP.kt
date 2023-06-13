@@ -1,3 +1,5 @@
+package dev.beewise.jokes.extensions
+
 import android.content.res.Resources
 import android.util.TypedValue
 

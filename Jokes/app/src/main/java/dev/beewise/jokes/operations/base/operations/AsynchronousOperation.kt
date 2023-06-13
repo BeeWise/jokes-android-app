@@ -1,5 +1,8 @@
+package dev.beewise.jokes.operations.base.operations
+
 import android.util.Log
 import dev.beewise.jokes.BuildConfig
+import dev.beewise.jokes.operations.base.errors.OperationError
 import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONObject

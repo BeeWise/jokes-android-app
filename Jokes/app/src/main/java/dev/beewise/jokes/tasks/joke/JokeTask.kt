@@ -3,14 +3,14 @@ package dev.beewise.jokes.tasks.joke
 import dev.beewise.jokes.operations.jokes.FetchJokesLocalOperation
 import dev.beewise.jokes.operations.jokes.FetchJokesOperation
 import dev.beewise.jokes.operations.jokes.FetchJokesOperationModels
-import OperationError
-import AsynchronousOperation
-import OperationQueue
-import OperationResult
-import Result
-import TaskEnvironment
-import TaskProtocol
 import dev.beewise.jokes.models.joke.Joke
+import dev.beewise.jokes.operations.base.errors.OperationError
+import dev.beewise.jokes.operations.base.operations.AsynchronousOperation
+import dev.beewise.jokes.operations.base.operations.OperationQueue
+import dev.beewise.jokes.operations.base.operations.OperationResult
+import dev.beewise.jokes.tasks.environment.TaskEnvironment
+import dev.beewise.jokes.operations.base.operations.Result
+import dev.beewise.jokes.tasks.task_protocol.TaskProtocol
 
 public class JokeTaskModels {
     public class FetchJokes {

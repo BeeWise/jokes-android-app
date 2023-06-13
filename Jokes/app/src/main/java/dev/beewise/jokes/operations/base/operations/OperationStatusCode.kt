@@ -1,3 +1,5 @@
+package dev.beewise.jokes.operations.base.operations
+
 enum class OperationStatusCode(val value: Int) {
     // Successful 2xx
     ok(200),

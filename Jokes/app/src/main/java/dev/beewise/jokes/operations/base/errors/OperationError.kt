@@ -1,3 +1,5 @@
+package dev.beewise.jokes.operations.base.errors
+
 public sealed class OperationError {
     object noUrlAvailable : OperationError()
     object noDataAvailable : OperationError()

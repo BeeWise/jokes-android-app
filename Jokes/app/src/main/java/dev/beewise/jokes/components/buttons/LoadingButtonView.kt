@@ -1,3 +1,5 @@
+package dev.beewise.jokes.components.buttons
+
 import android.content.Context
 import android.content.res.ColorStateList
 import android.text.SpannableString
@@ -8,6 +10,8 @@ import android.widget.TextView
 import androidx.annotation.Nullable
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
+import dev.beewise.jokes.style.ApplicationConstraints
+import dev.beewise.jokes.style.ApplicationStyle
 
 class LoadingButtonView: ConstraintLayout {
     var textView: TextView? = null
@@ -17,11 +21,11 @@ class LoadingButtonView: ConstraintLayout {
         this.setup()
     }
 
-    constructor(context: Context, @Nullable attrs: AttributeSet?) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         this.setup()
     }
 
-    constructor(context: Context, @Nullable attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         this.setup()
     }
 

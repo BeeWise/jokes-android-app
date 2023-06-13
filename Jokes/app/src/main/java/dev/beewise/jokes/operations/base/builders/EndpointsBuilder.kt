@@ -1,3 +1,5 @@
+package dev.beewise.jokes.operations.base.builders
+
 import dev.beewise.jokes.BuildConfig
 
 public final class EndpointsBuilder {

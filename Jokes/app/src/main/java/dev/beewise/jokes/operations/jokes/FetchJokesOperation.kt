@@ -1,14 +1,14 @@
 package dev.beewise.jokes.operations.jokes
 
-import EndpointsBuilder
-import HTTPMethod
-import OperationRequestBuilder
-import AsynchronousOperation
-import OperationResult
-import Result
-import JSONFileOperation
 import dev.beewise.jokes.managers.ModelManager
 import dev.beewise.jokes.models.joke.Joke
+import dev.beewise.jokes.operations.base.builders.EndpointsBuilder
+import dev.beewise.jokes.operations.base.builders.HTTPMethod
+import dev.beewise.jokes.operations.base.builders.OperationRequestBuilder
+import dev.beewise.jokes.operations.base.operations.AsynchronousOperation
+import dev.beewise.jokes.operations.base.operations.JSONFileOperation
+import dev.beewise.jokes.operations.base.operations.OperationResult
+import dev.beewise.jokes.operations.base.operations.Result
 import okhttp3.Request
 import org.json.JSONObject
 import java.util.HashMap

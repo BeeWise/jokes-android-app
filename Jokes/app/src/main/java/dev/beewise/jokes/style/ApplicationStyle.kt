@@ -1,3 +1,6 @@
+package dev.beewise.jokes.style
+
+import dev.beewise.jokes.managers.ContextManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -19,10 +22,27 @@ class ApplicationStyle {
     fun context(): Context? = ContextManager.instance.context?.get()
 
     // region Colors
-    public fun transparent(): Int { return Color.TRANSPARENT }
     public fun white(): Int { return R.color.white.toColor() }
     public fun black(): Int { return R.color.black.toColor() }
-    public fun primary(): Int { return R.color.black.toColor() }
+    public fun primary(): Int { return R.color.primary.toColor() }
+    public fun secondary(): Int { return R.color.secondary.toColor() }
+
+    public fun lightPrimary(): Int { return R.color.lightPrimary.toColor() }
+    public fun lightPrimaryShade15(): Int { return R.color.lightPrimaryShade15.toColor() }
+
+    public fun lightSecondary(): Int { return R.color.lightSecondary.toColor() }
+    public fun lightSecondaryShade15(): Int { return R.color.lightSecondaryShade15.toColor() }
+
+    public fun transparent(): Int { return R.color.transparent.toColor() }
+
+    public fun gray(): Int { return R.color.gray.toColor() }
+    public fun lightGray(): Int { return R.color.lightGray.toColor() }
+
+    public fun backgroundColor(): Int { return R.color.backgroundColor.toColor() }
+
+    public fun neonDarkGreen(): Int { return R.color.neonDarkGreen.toColor() }
+    public fun neonOrange(): Int { return R.color.neonOrange.toColor() }
+    public fun neonPurple(): Int { return R.color.neonPurple.toColor() }
     // endregion
     
     // region Images
@@ -30,7 +50,7 @@ class ApplicationStyle {
 //        logoSmallImage(R.mipmap.logo_small_image);
     }
 
-//    public inline fun <reified T> logoSmallImage(type: ImageType): T = this.image(Images.logoSmallImage.value, type)
+//    public inline fun <reified T> logoSmallImage(type: ImageType): T = this.dev.beewise.jokes.style.image(Images.logoSmallImage.value, type)
 
     public enum class ImageType(val value: Int) {
         drawable(0),
@@ -46,9 +66,9 @@ class ApplicationStyle {
 //        light(R.font.europa_light)
     }
 
-//    public val regular = this.getFont(Fonts.regular.value)
-//    public val bold = this.getFont(Fonts.bold.value)
-//    public val light = this.getFont(Fonts.light.value)
+//    public val regular = this.dev.beewise.jokes.style.getFont(Fonts.regular.value)
+//    public val bold = this.dev.beewise.jokes.style.getFont(Fonts.bold.value)
+//    public val light = this.dev.beewise.jokes.style.getFont(Fonts.light.value)
     // endregion
 }
 

@@ -1,3 +1,5 @@
+package dev.beewise.jokes.operations.base.builders
+
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

@@ -1,3 +1,5 @@
+package dev.beewise.jokes.components.views
+
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Bitmap

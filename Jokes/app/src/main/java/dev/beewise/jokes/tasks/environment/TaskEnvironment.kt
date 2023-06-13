@@ -1,3 +1,4 @@
+package dev.beewise.jokes.tasks.environment
 public enum class TaskEnvironment(val value: String?) {
     production("production"),
     development("development"),

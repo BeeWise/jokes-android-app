@@ -1,3 +1,5 @@
+package dev.beewise.jokes.operations.base.operations
+
 import java.util.concurrent.CopyOnWriteArrayList
 
 open class OperationQueue {

@@ -1,3 +1,6 @@
+package dev.beewise.jokes.operations.base.operations
+
+import dev.beewise.jokes.operations.base.errors.OperationError
 import java.util.*
 
 open class Operation {
