@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Jokes</string>
+
+    <string name="Operation.error.unknown">Ups! A apărut o eroare… Doar glumim, te rog să încerci din nou! 😂</string>
+
+    <string name="Operation.error.no.url.available">Ups! A apărut o eroare… Doar glumim, te rog să încerci din nou! 😂</string>
+    <string name="Operation.error.no.data.available">Ups! A apărut o eroare… Doar glumim, te rog să încerci din nou! 😂</string>
+    <string name="Operation.error.cannot.parse.response">Ups! A apărut o eroare… Doar glumim, te rog să încerci din nou! 😂</string>
+    <string name="Operation.error.operation.cancelled">Ups! A apărut o eroare… Doar glumim, te rog să încerci din nou! 😂</string>
+    <string name="Operation.error.no.internet.connection">Ups! Nu ai conexiune la Internet. Te rog să încerci mai târziu!</string>
+
+    <string name="Cancel.title">Anulează</string>
+    <string name="Save.title">Salvează</string>
+    <string name="Done.title">Done</string>
+    <string name="OK.title">OK</string>
+
+    <string name="Jokes.title">Glume</string>
+
+    <string name="Username.title">\@%s</string>
+
+    <string name="iOS.title">iOS</string>
+    <string name="Android.title">Android</string>
+
+    <string name="Joke.type.text.title">Text</string>
+    <string name="Joke.type.qna.title">Întrebare și răspuns</string>
+
+    <string name="Joke.status.pending.title">În așteptare</string>
+    <string name="Joke.status.approved.title">Aprobat</string>
+    <string name="Joke.status.rejected.title">Refuzat</string>
+    <string name="Joke.status.admin.removed.title">Eliminat de admin</string>
+    <string name="Joke.status.owner.removed.title">Eliminat</string>
+
+    <string name="Share.joke.title">Distribuie gluma</string>
+    <string name="Share.joke.message">Vrei să râzi? Citește o glumă bună. 🤣</string>
+
+    <string name="Read.answer.title">Citește răspunsul</string>
+
+    <string name="Jokes.scene.joke.of.the.day.title">🔥Gluma zilei</string>
+    <string name="Jokes.scene.joke.of.the.week.title">🔥Gluma săptămânii</string>
+    <string name="Jokes.scene.joke.of.the.month.title">🔥Gluma lunii</string>
+    <string name="Jokes.scene.joke.of.the.year.title">🔥Gluma anului</string>
+    <string name="Jokes.scene.no.more.items.text">Nu mai sunt glume</string>
+    <string name="Jokes.scene.error.text">A apărut o eroare. Reîncarcă glumele ↺</string>
+    <string name="Jokes.scene.source.text">Sursă: %s</string>
+</resources>

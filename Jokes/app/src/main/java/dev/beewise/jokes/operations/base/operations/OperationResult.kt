@@ -1,0 +1,1 @@
+public class OperationResult<T>(val value: T)

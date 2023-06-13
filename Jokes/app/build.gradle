@@ -1,0 +1,98 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+def debugProperties = new Properties()
+debugProperties.load(new FileInputStream(file("debug.properties")))
+
+def developmentProperties = new Properties()
+developmentProperties.load(new FileInputStream(file("development.properties")))
+
+def productionProperties = new Properties()
+productionProperties.load(new FileInputStream(file("production.properties")))
+
+android {
+    namespace 'dev.beewise.jokes'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "dev.beewise.jokes"
+        minSdk 23
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        development {
+            storeFile file(developmentProperties.getProperty("KEY_STORE_FILE_PATH"))
+            storePassword developmentProperties.getProperty("KEY_STORE_PASSWORD")
+            keyAlias developmentProperties.getProperty("KEY_ALIAS")
+            keyPassword developmentProperties.getProperty("KEY_ALIAS_PASSWORD")
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+            debuggable true
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            def properties = debugProperties
+
+            buildConfigField "String", 'TASK_CONFIGURATOR_ENVIRONMENT', properties.getProperty("TASK_CONFIGURATOR_ENVIRONMENT")
+            buildConfigField "String", 'OPERATION_LOGGING_ENABLED', properties.getProperty("OPERATION_LOGGING_ENABLED")
+            buildConfigField "String", 'JOKES_ENDPOINT', properties.getProperty("JOKES_ENDPOINT")
+        }
+        development {
+            debuggable true
+            signingConfig signingConfigs.development
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            def properties = developmentProperties
+
+            buildConfigField "String", 'TASK_CONFIGURATOR_ENVIRONMENT', properties.getProperty("TASK_CONFIGURATOR_ENVIRONMENT")
+            buildConfigField "String", 'OPERATION_LOGGING_ENABLED', properties.getProperty("OPERATION_LOGGING_ENABLED")
+            buildConfigField "String", 'JOKES_ENDPOINT', properties.getProperty("JOKES_ENDPOINT")
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            def properties = productionProperties
+
+            buildConfigField "String", 'TASK_CONFIGURATOR_ENVIRONMENT', properties.getProperty("TASK_CONFIGURATOR_ENVIRONMENT")
+            buildConfigField "String", 'OPERATION_LOGGING_ENABLED', properties.getProperty("OPERATION_LOGGING_ENABLED")
+            buildConfigField "String", 'JOKES_ENDPOINT', properties.getProperty("JOKES_ENDPOINT")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.9.0"))
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+}
