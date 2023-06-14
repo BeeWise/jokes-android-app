@@ -11,11 +11,13 @@ import dev.beewise.jokes.extensions.fragment.runOnUiThread
 import java.lang.ref.WeakReference
 
 interface SplashDisplayLogic {
-    fun displaySomething(viewModel: SplashModels.Something.ViewModel)
+    fun displaySetupScene(viewModel: SplashModels.SceneSetup.ViewModel)
+    fun displayDismissScene()
 }
 
 public interface SplashFragmentDelegate {
     fun splashFragmentDismissScene(fragment: SplashFragment)
+    fun splashFragmentNavigateToJokes(fragment: SplashFragment)
 }
 
 class SplashFragment: Fragment(), SplashDisplayLogic {
@@ -48,6 +50,11 @@ class SplashFragment: Fragment(), SplashDisplayLogic {
         return rootView
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        this.interactor?.shouldFetchUserDetails()
+    }
+
     // region Subviews
     private fun findSubviews(view: View) {
         this.contentView = view.findViewById(R.id.contentViewId)
@@ -65,9 +72,17 @@ class SplashFragment: Fragment(), SplashDisplayLogic {
     // endregion
 
     //region Display logic
-    override fun displaySomething(viewModel: SplashModels.Something.ViewModel) {
+    override fun displaySetupScene(viewModel: SplashModels.SceneSetup.ViewModel) {
         this.runOnUiThread {
-            
+            if (viewModel.type == SplashModels.SceneType.jokes) {
+                this.delegate?.get()?.splashFragmentNavigateToJokes(this)
+            }
+        }
+    }
+
+    override fun displayDismissScene() {
+        this.runOnUiThread {
+            this.delegate?.get()?.splashFragmentDismissScene(this)
         }
     }
     //endregion

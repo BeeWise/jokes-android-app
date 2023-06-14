@@ -1,8 +1,6 @@
 package dev.beewise.jokes.scenes.splash
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -16,12 +14,6 @@ class SplashActivity: AppCompatActivity(), SplashFragmentDelegate {
     var router: SplashRoutingLogic? = null
 
     var frameLayout: FrameLayout? = null
-
-    companion object {
-        fun intent(activity: Activity): Intent {
-            return Intent(activity, SplashActivity::class.java)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,5 +55,9 @@ class SplashActivity: AppCompatActivity(), SplashFragmentDelegate {
 
     override fun splashFragmentDismissScene(fragment: SplashFragment) {
         this.router?.dismissActivity()
+    }
+
+    override fun splashFragmentNavigateToJokes(fragment: SplashFragment) {
+        this.router?.navigateToJokes()
     }
 }

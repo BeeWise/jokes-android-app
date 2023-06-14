@@ -3,7 +3,8 @@ package dev.beewise.jokes.scenes.splash
 import java.lang.ref.WeakReference
 
 interface SplashPresentationLogic {
-    fun presentSomething(response: SplashModels.Something.Response)
+    fun presentSetupScene(response: SplashModels.SceneSetup.Response)
+    fun presentDismissScene()
 }
 
 class SplashPresenter(displayLogic: SplashDisplayLogic) :
@@ -14,7 +15,11 @@ class SplashPresenter(displayLogic: SplashDisplayLogic) :
         this.displayer = WeakReference(displayLogic)
     }
 
-    override fun presentSomething(response: SplashModels.Something.Response) {
-        this.displayer?.get()?.displaySomething(SplashModels.Something.ViewModel(response.value))
+    override fun presentSetupScene(response: SplashModels.SceneSetup.Response) {
+        this.displayer?.get()?.displaySetupScene(SplashModels.SceneSetup.ViewModel(response.type))
+    }
+
+    override fun presentDismissScene() {
+        this.displayer?.get()?.displayDismissScene()
     }
 }

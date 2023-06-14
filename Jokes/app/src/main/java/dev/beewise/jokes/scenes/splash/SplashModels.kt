@@ -1,11 +1,14 @@
 package dev.beewise.jokes.scenes.splash
 
 class SplashModels {
-    class Something {
-        class Request(val value: String)
+    enum class SceneType {
+        splash,
+        jokes
+    }
 
-        class Response(val value: String)
+    class SceneSetup {
+        class Response(val type: SceneType)
 
-        class ViewModel(val value: String)
+        class ViewModel(val type: SceneType)
     }
 }
