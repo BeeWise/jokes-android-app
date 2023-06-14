@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import dev.beewise.jokes.R
 import dev.beewise.jokes.extensions.fragment.runOnUiThread
@@ -15,7 +17,7 @@ interface SplashDisplayLogic {
     fun displayDismissScene()
 }
 
-public interface SplashFragmentDelegate {
+interface SplashFragmentDelegate {
     fun splashFragmentDismissScene(fragment: SplashFragment)
     fun splashFragmentNavigateToJokes(fragment: SplashFragment)
 }
@@ -32,6 +34,7 @@ class SplashFragment: Fragment(), SplashDisplayLogic {
     var interactor: SplashBusinessLogic? = null
 
     lateinit var contentView: ConstraintLayout
+    private lateinit var imageView: ImageView
 
     var delegate: WeakReference<SplashFragmentDelegate>? = null
 
@@ -61,13 +64,32 @@ class SplashFragment: Fragment(), SplashDisplayLogic {
     }
 
     private fun setupSubviews() {
-        
+        this.setupImageView()
+    }
+
+    private fun setupImageView() {
+        val imageView = ImageView(this.context)
+        imageView.id = View.generateViewId()
+        imageView.layoutParams = ConstraintLayout.LayoutParams(0, 0)
+        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+        imageView.setImageDrawable(SplashStyle.instance.contentViewModel.backgroundImage())
+        this.contentView.addView(imageView)
+        this.imageView = imageView
     }
     //endregion
 
     //region Constraints
     private fun setupSubviewsConstraints() {
-        
+        this.setupImageViewConstraints()
+    }
+
+    private fun setupImageViewConstraints() {
+        this.imageView.updateLayoutParams<ConstraintLayout.LayoutParams> {
+            this.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+            this.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
+            this.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+            this.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+        }
     }
     // endregion
 

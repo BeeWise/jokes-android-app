@@ -1,5 +1,6 @@
 package dev.beewise.jokes.scenes.splash
 
+import android.graphics.drawable.Drawable
 import dev.beewise.jokes.style.ApplicationStyle
 
 public class SplashStyle {
@@ -10,6 +11,6 @@ public class SplashStyle {
     var contentViewModel: ContentViewModel = ContentViewModel()
 
     class ContentViewModel {
-        fun backgroundColor(): Int { return ApplicationStyle.instance.backgroundColor() }
+        fun backgroundImage(): Drawable { return ApplicationStyle.instance.wallBackgroundImage(ApplicationStyle.ImageType.drawable) }
     }
 }

@@ -47,10 +47,10 @@ class ApplicationStyle {
     
     // region Images
     public enum class Images(val value: Int) {
-//        logoSmallImage(R.mipmap.logo_small_image);
+        wallBackgroundImage(R.mipmap.wall_background_image);
     }
 
-//    public inline fun <reified T> logoSmallImage(type: ImageType): T = this.dev.beewise.jokes.style.image(Images.logoSmallImage.value, type)
+    public inline fun <reified T> wallBackgroundImage(type: ImageType): T = this.image(Images.wallBackgroundImage.value, type)
 
     public enum class ImageType(val value: Int) {
         drawable(0),
