@@ -11,7 +11,20 @@ import dev.beewise.jokes.extensions.fragment.runOnUiThread
 import java.lang.ref.WeakReference
 
 interface JokesDisplayLogic {
-    fun displaySomething(viewModel: JokesModels.Something.ViewModel)
+    fun displayLoadingState()
+    fun displayNotLoadingState()
+
+    fun displayItems(viewModel: JokesModels.ItemsPresentation.ViewModel)
+
+    fun displayNoMoreItems(viewModel: JokesModels.NoMoreItemsPresentation.ViewModel)
+    fun displayRemoveNoMoreItems()
+
+    fun displayError(viewModel: JokesModels.ErrorPresentation.ViewModel)
+    fun displayRemoveError()
+
+    fun displayReadState(viewModel: JokesModels.ItemReadState.ViewModel)
+
+    fun displayScrollToItem(viewModel: JokesModels.ItemScroll.ViewModel)
 }
 
 public interface JokesFragmentDelegate {
@@ -65,8 +78,56 @@ class JokesFragment: Fragment(), JokesDisplayLogic {
     // endregion
 
     //region Display logic
-    override fun displaySomething(viewModel: JokesModels.Something.ViewModel) {
-        this.runOnUiThread {
+    override fun displayLoadingState() {
+        this.runOnUiThread { 
+            
+        }
+    }
+
+    override fun displayNotLoadingState() {
+        this.runOnUiThread { 
+            
+        }
+    }
+
+    override fun displayItems(viewModel: JokesModels.ItemsPresentation.ViewModel) {
+        this.runOnUiThread { 
+            
+        }
+    }
+
+    override fun displayNoMoreItems(viewModel: JokesModels.NoMoreItemsPresentation.ViewModel) {
+        this.runOnUiThread { 
+            
+        }
+    }
+
+    override fun displayRemoveNoMoreItems() {
+        this.runOnUiThread { 
+            
+        }
+    }
+
+    override fun displayError(viewModel: JokesModels.ErrorPresentation.ViewModel) {
+        this.runOnUiThread { 
+            
+        }
+    }
+
+    override fun displayRemoveError() {
+        this.runOnUiThread { 
+            
+        }
+    }
+
+    override fun displayReadState(viewModel: JokesModels.ItemReadState.ViewModel) {
+        this.runOnUiThread { 
+            
+        }
+    }
+
+    override fun displayScrollToItem(viewModel: JokesModels.ItemScroll.ViewModel) {
+        this.runOnUiThread { 
             
         }
     }

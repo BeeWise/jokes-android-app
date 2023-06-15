@@ -32,6 +32,7 @@ class ModelManager {
         val id = jsonObject.getInt("id")
         val uuid = jsonObject.getString("uuid")
         val text = jsonObject.optString("text")
+        val answer = jsonObject.optString("answer")
         val likeCount = jsonObject.optInt("like_count")
         val dislikeCount = jsonObject.optInt("dislike_count")
         val commentCount = jsonObject.optInt("comment_count")
@@ -41,7 +42,7 @@ class ModelManager {
         val status = jsonObject.optInt("status")
         val user = this.parseUser(jsonObject.optJSONObject("user"))
         val like = this.parseLike(jsonObject.optJSONObject("like"))
-        return Joke(id, uuid, text, likeCount, dislikeCount, commentCount, createdAt, source, type, status, user, like)
+        return Joke(id, uuid, text, answer, likeCount, dislikeCount, commentCount, createdAt, source, type, status, user, like)
     }
 
     fun parseUser(jsonObject: JSONObject?): User? {

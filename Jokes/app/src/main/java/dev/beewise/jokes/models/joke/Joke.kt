@@ -9,6 +9,7 @@ class Joke(
     var id: Int?,
     var uuid: String?,
     var text: String?,
+    var answer: String?,
     var likeCount: Int = 0,
     var dislikeCount: Int = 0,
     var commentCount: Int = 0,

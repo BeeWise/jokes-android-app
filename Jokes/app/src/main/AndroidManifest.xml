@@ -23,6 +23,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".scenes.jokes.JokesActivity"
+            android:screenOrientation="sensorPortrait" />
+
     </application>
 
 </manifest>
