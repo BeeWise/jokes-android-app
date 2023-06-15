@@ -10,6 +10,7 @@ class ApplicationConstraints {
     }
 
     enum class constant(val value: Int) {
+        x0(1F.dp.roundToInt()),
         x1(1F.dp.roundToInt()),
         x2(2F.dp.roundToInt()),
         x4(4F.dp.roundToInt()),

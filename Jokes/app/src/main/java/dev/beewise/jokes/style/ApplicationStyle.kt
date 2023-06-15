@@ -47,10 +47,16 @@ class ApplicationStyle {
     
     // region Images
     public enum class Images(val value: Int) {
-        wallBackgroundImage(R.mipmap.wall_background_image);
+        wallBackgroundImage(R.mipmap.wall_background_image),
+        userAvatarPlaceholderSmallImage(R.mipmap.user_avatar_placeholder_small_image),
+        likeSmallImage(R.mipmap.like_small_image),
+        dislikeSmallImage(R.mipmap.dislike_small_image);
     }
 
     public inline fun <reified T> wallBackgroundImage(type: ImageType): T = this.image(Images.wallBackgroundImage.value, type)
+    public inline fun <reified T> userAvatarPlaceholderSmallImage(type: ImageType): T = this.image(Images.userAvatarPlaceholderSmallImage.value, type)
+    public inline fun <reified T> likeSmallImage(type: ImageType): T = this.image(Images.likeSmallImage.value, type)
+    public inline fun <reified T> dislikeSmallImage(type: ImageType): T = this.image(Images.dislikeSmallImage.value, type)
 
     public enum class ImageType(val value: Int) {
         drawable(0),
@@ -61,14 +67,18 @@ class ApplicationStyle {
 
     // region Fonts
     public enum class Fonts(val value: Int) {
-//        regular(R.font.europa_regular),
-//        bold(R.font.europa_bold),
-//        light(R.font.europa_light)
+        regular(R.font.helvetica),
+        bold(R.font.helvetica_bold),
+        light(R.font.helvetica_light),
+        oblique(R.font.helvetica_oblique),
+        boldOblique(R.font.helvetica_bold_oblique);
     }
 
-//    public val regular = this.dev.beewise.jokes.style.getFont(Fonts.regular.value)
-//    public val bold = this.dev.beewise.jokes.style.getFont(Fonts.bold.value)
-//    public val light = this.dev.beewise.jokes.style.getFont(Fonts.light.value)
+    public fun regular(): Typeface { return this.getFont(Fonts.regular.value) }
+    public fun bold(): Typeface { return this.getFont(Fonts.bold.value) }
+    public fun light(): Typeface { return this.getFont(Fonts.light.value) }
+    public fun oblique(): Typeface { return this.getFont(Fonts.oblique.value) }
+    public fun boldOblique(): Typeface { return this.getFont(Fonts.boldOblique.value) }
     // endregion
 }
 
