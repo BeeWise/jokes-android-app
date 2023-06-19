@@ -164,7 +164,7 @@ class JokesPresenter(displayLogic: JokesDisplayLogic) : JokesPresentationLogic {
     private fun jokeLikeViewModel(joke: Joke): ImageTitleButton.Model {
         val likeCount = ImageTitleButton.Model()
         likeCount.activityIndicatorColor = JokesStyle.instance.jokeCellModel.likeCountActivityColor()
-        likeCount.image = CompoundImage(null, null, JokesStyle.instance.jokeCellModel.likeCountImage())
+        likeCount.image = CompoundImage(null, null, JokesStyle.instance.jokeCellModel.likeCountImage(), ImageView.ScaleType.FIT_CENTER)
         likeCount.imageTintColor = JokesStyle.instance.jokeCellModel.unselectedLikeCountTintColor()
         likeCount.backgroundColor = JokesStyle.instance.jokeCellModel.unselectedLikeCountBackgroundColor()
         likeCount.title = joke.likeCount.toString().toSpannableString(JokesStyle.instance.jokeCellModel.unselectedLikeCountSpans())
@@ -177,7 +177,7 @@ class JokesPresenter(displayLogic: JokesDisplayLogic) : JokesPresentationLogic {
     private fun jokeDislikeViewModel(joke: Joke): ImageTitleButton.Model {
         val dislikeCount = ImageTitleButton.Model()
         dislikeCount.activityIndicatorColor = JokesStyle.instance.jokeCellModel.dislikeCountActivityColor()
-        dislikeCount.image = CompoundImage(null, null, JokesStyle.instance.jokeCellModel.dislikeCountImage())
+        dislikeCount.image = CompoundImage(null, null, JokesStyle.instance.jokeCellModel.dislikeCountImage(), ImageView.ScaleType.FIT_CENTER)
         dislikeCount.imageTintColor = JokesStyle.instance.jokeCellModel.unselectedDislikeCountTintColor()
         dislikeCount.backgroundColor = JokesStyle.instance.jokeCellModel.unselectedDislikeCountBackgroundColor()
         dislikeCount.title = joke.dislikeCount.toString().toSpannableString(JokesStyle.instance.jokeCellModel.unselectedDislikeCountSpans())

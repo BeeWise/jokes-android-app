@@ -50,13 +50,21 @@ class ApplicationStyle {
         wallBackgroundImage(R.mipmap.wall_background_image),
         userAvatarPlaceholderSmallImage(R.mipmap.user_avatar_placeholder_small_image),
         likeSmallImage(R.mipmap.like_small_image),
-        dislikeSmallImage(R.mipmap.dislike_small_image);
+        dislikeSmallImage(R.mipmap.dislike_small_image),
+        backArrowSmallImage(R.mipmap.back_arrow_small_image),
+        neonLogoMediumImage(R.mipmap.neon_medium_logo_image),
+        answerSmallImage(R.mipmap.answer_small_image),
+        buttonBackgroundImage(R.mipmap.button_wall_background_image);
     }
 
     public inline fun <reified T> wallBackgroundImage(type: ImageType): T = this.image(Images.wallBackgroundImage.value, type)
     public inline fun <reified T> userAvatarPlaceholderSmallImage(type: ImageType): T = this.image(Images.userAvatarPlaceholderSmallImage.value, type)
     public inline fun <reified T> likeSmallImage(type: ImageType): T = this.image(Images.likeSmallImage.value, type)
     public inline fun <reified T> dislikeSmallImage(type: ImageType): T = this.image(Images.dislikeSmallImage.value, type)
+    public inline fun <reified T> backArrowSmallImage(type: ImageType): T = this.image(Images.backArrowSmallImage.value, type)
+    public inline fun <reified T> neonLogoMediumImage(type: ImageType): T = this.image(Images.neonLogoMediumImage.value, type)
+    public inline fun <reified T> answerSmallImage(type: ImageType): T = this.image(Images.answerSmallImage.value, type)
+    public inline fun <reified T> buttonBackgroundImage(type: ImageType): T = this.image(Images.buttonBackgroundImage.value, type)
 
     public enum class ImageType(val value: Int) {
         drawable(0),

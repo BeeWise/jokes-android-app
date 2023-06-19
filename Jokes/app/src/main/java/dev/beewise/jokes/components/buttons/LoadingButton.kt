@@ -7,13 +7,17 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.annotation.Nullable
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
 import dev.beewise.jokes.style.ApplicationConstraints
 import dev.beewise.jokes.style.ApplicationStyle
 
-class LoadingButtonView: ConstraintLayout {
+class LoadingButton: ConstraintLayout {
+    class Model {
+        var title: SpannableString? = null
+        var isLoading: Boolean = false
+    }
+
     var textView: TextView? = null
     var progressBar: ProgressBar? = null
 
@@ -84,11 +88,16 @@ class LoadingButtonView: ConstraintLayout {
         }
     }
 
-    fun setTitle(title: SpannableString?) {
+    fun setModel(model: Model) {
+        this.setTitle(model.title)
+        this.setIsLoading(model.isLoading)
+    }
+
+    private fun setTitle(title: SpannableString?) {
         this.textView?.text = title
     }
 
-    fun setIsLoading(isLoading: Boolean) {
+    private fun setIsLoading(isLoading: Boolean) {
         if (isLoading) {
             this.textView?.visibility = View.INVISIBLE
             this.progressBar?.visibility = View.VISIBLE

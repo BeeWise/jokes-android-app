@@ -19,7 +19,6 @@ public sealed class OperationError {
                 is operationCancelled -> ""
                 is cannotRefreshToken -> "Cannot refresh token."
                 is error -> this.message
-                else -> return null
             }
         }
 }
