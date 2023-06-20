@@ -4,10 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dev.beewise.jokes.R
+import dev.beewise.jokes.components.views.LoadingImageView
+import dev.beewise.jokes.components.views.LogoNavigationView
+import dev.beewise.jokes.components.views.LogoNavigationViewDelegate
+import dev.beewise.jokes.components.views.UserAvatarView
 import dev.beewise.jokes.extensions.fragment.runOnUiThread
+import dev.beewise.jokes.extensions.recycler_view.shouldLoadMore
+import dev.beewise.jokes.models.image.CompoundImage
+import dev.beewise.jokes.style.ApplicationConstraints
+import dev.beewise.jokes.style.ApplicationStyle
 import java.lang.ref.WeakReference
 
 interface JokesDisplayLogic {
@@ -31,7 +43,7 @@ public interface JokesFragmentDelegate {
     fun jokesFragmentDismissScene(fragment: JokesFragment)
 }
 
-class JokesFragment: Fragment(), JokesDisplayLogic {
+class JokesFragment: Fragment(), JokesDisplayLogic, JokesAdapterDelegate, LogoNavigationViewDelegate {
     companion object {
         const val TAG: String = "JokesFragmentTag"
 
@@ -43,6 +55,10 @@ class JokesFragment: Fragment(), JokesDisplayLogic {
     var interactor: JokesBusinessLogic? = null
 
     lateinit var contentView: ConstraintLayout
+    lateinit var backgroundImageView: ImageView
+    lateinit var navigationBarView: LogoNavigationView
+    lateinit var adapter: JokesAdapter
+    lateinit var recyclerView: RecyclerView
 
     var delegate: WeakReference<JokesFragmentDelegate>? = null
 
@@ -61,74 +77,184 @@ class JokesFragment: Fragment(), JokesDisplayLogic {
         return rootView
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        this.interactor?.shouldFetchJokes()
+    }
+
     // region Subviews
     private fun findSubviews(view: View) {
         this.contentView = view.findViewById(R.id.contentViewId)
     }
 
     private fun setupSubviews() {
-        
+        this.setupBackgroundImageView()
+        this.setupNavigationBarView()
+        this.setupAdapter()
+        this.setupRecyclerView()
+    }
+
+    private fun setupBackgroundImageView() {
+        val imageView = ImageView(this.context)
+        imageView.id = View.generateViewId()
+        imageView.layoutParams = ConstraintLayout.LayoutParams(0, 0)
+        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+        imageView.setImageDrawable(ApplicationStyle.instance.wallBackgroundImage(ApplicationStyle.ImageType.drawable))
+        this.contentView.addView(imageView)
+        this.backgroundImageView = imageView
+    }
+
+    private fun setupNavigationBarView() {
+        val context = this.context ?: return
+
+        val loadingImageModel = LoadingImageView.Model(CompoundImage(), false)
+        val userAvatarModel = UserAvatarView.Model(loadingImageModel)
+        val model = LogoNavigationView.Model(userAvatarModel)
+        model.includeBack = false
+        model.includeUserAvatar = false
+        model.includeSeparator = true
+
+        val navigationBarView = LogoNavigationView(context)
+        navigationBarView.id = View.generateViewId()
+        navigationBarView.layoutParams = ConstraintLayout.LayoutParams(0, 0)
+        navigationBarView.delegate = WeakReference(this)
+        navigationBarView.setModel(model)
+        this.contentView.addView(navigationBarView)
+        this.navigationBarView = navigationBarView
+    }
+
+    override fun logoNavigationViewOnPressBackButton(view: LogoNavigationView) {
+
+    }
+
+    override fun logoNavigationViewOnPressLogoImage(view: LogoNavigationView) {
+        this.interactor?.shouldSelectLogo()
+    }
+
+    override fun logoNavigationViewOnPressUserAvatar(view: LogoNavigationView) {
+
+    }
+
+    private fun setupAdapter() {
+        this.adapter = JokesAdapter(this)
+    }
+
+    override fun jokesAdapterJokeQuestionAnswerCellOnPressReadAnswer(adapter: JokesAdapter, id: String?) {
+        this.interactor?.shouldSelectReadAnswer(JokesModels.ItemSelection.Request(id))
+    }
+
+    private fun setupRecyclerView() {
+        val context = this.context ?: return
+        val recyclerView = RecyclerView(context)
+        recyclerView.id = View.generateViewId()
+        recyclerView.layoutParams = ConstraintLayout.LayoutParams(0, 0)
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
+        recyclerView.adapter = this.adapter
+        recyclerView.setBackgroundColor(JokesStyle.instance.recyclerViewModel.backgroundColor())
+        recyclerView.shouldLoadMore {
+            this.interactor?.shouldFetchJokes()
+        }
+        this.contentView.addView(recyclerView)
+        this.recyclerView = recyclerView
     }
     //endregion
 
     //region Constraints
     private fun setupSubviewsConstraints() {
-        
+        this.setupBackgroundImageViewConstraints()
+        this.setupNavigationBarViewConstraints()
+        this.setupRecyclerViewConstraints()
+    }
+
+    private fun setupBackgroundImageViewConstraints() {
+        this.backgroundImageView.updateLayoutParams<ConstraintLayout.LayoutParams> {
+            this.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+            this.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
+            this.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+            this.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+        }
+    }
+
+    private fun setupNavigationBarViewConstraints() {
+        this.navigationBarView.updateLayoutParams<ConstraintLayout.LayoutParams> {
+            this.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+            this.bottomToTop = this@JokesFragment.recyclerView.id
+            this.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+            this.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+
+            this.height = ApplicationConstraints.navigationBarHeight()
+        }
+    }
+
+    private fun setupRecyclerViewConstraints() {
+        this.recyclerView.updateLayoutParams<ConstraintLayout.LayoutParams> {
+            this.topToBottom = this@JokesFragment.navigationBarView.id
+            this.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
+            this.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+            this.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+        }
     }
     // endregion
 
     //region Display logic
     override fun displayLoadingState() {
         this.runOnUiThread { 
-            
+            this.adapter.setNewIsLoading(true)
         }
     }
 
     override fun displayNotLoadingState() {
         this.runOnUiThread { 
-            
+            this.adapter.setNewIsLoading(false)
         }
     }
 
     override fun displayItems(viewModel: JokesModels.ItemsPresentation.ViewModel) {
         this.runOnUiThread { 
-            
+            this.adapter.setNewItems(viewModel.items)
         }
     }
 
     override fun displayNoMoreItems(viewModel: JokesModels.NoMoreItemsPresentation.ViewModel) {
-        this.runOnUiThread { 
-            
+        this.runOnUiThread {
+            this.adapter.noMoreItemsText = viewModel.text
+            this.adapter.setNewNoMoreItems(true)
         }
     }
 
     override fun displayRemoveNoMoreItems() {
         this.runOnUiThread { 
-            
+            this.adapter.noMoreItemsText = null
+            this.adapter.setNewNoMoreItems(false)
         }
     }
 
     override fun displayError(viewModel: JokesModels.ErrorPresentation.ViewModel) {
-        this.runOnUiThread { 
-            
+        this.runOnUiThread {
+            this.adapter.errorText = viewModel.text
+            this.adapter.setNewHasError(true)
         }
     }
 
     override fun displayRemoveError() {
         this.runOnUiThread { 
-            
+            this.adapter.errorText = null
+            this.adapter.setNewHasError(false)
         }
     }
 
     override fun displayReadState(viewModel: JokesModels.ItemReadState.ViewModel) {
         this.runOnUiThread { 
-            
+            this.adapter.getIndexedJokeQnaModel(viewModel.id)?.let {
+                it.second.isRead = viewModel.isRead
+                this.adapter.notifyItemChanged(it.first)
+            }
         }
     }
 
     override fun displayScrollToItem(viewModel: JokesModels.ItemScroll.ViewModel) {
         this.runOnUiThread { 
-            
+            this.recyclerView.scrollToPosition(viewModel.index)
         }
     }
     //endregion

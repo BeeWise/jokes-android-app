@@ -39,7 +39,7 @@ class JokesModels {
     class ItemsPresentation {
         class Response(val items: ArrayList<Joke>, val readJokes: ArrayList<Joke>)
 
-        class ViewModel(val items: ArrayList<DisplayedItem>)
+        class ViewModel(val items: ArrayList<Any>)
     }
 
     class NoMoreItemsPresentation {

@@ -26,10 +26,9 @@ class ModelManager {
 
     fun parseJoke(jsonObject: JSONObject?): Joke? {
         if (jsonObject == null) return null
-        if (!jsonObject.has("id")) return null
         if (!jsonObject.has("uuid")) return null
 
-        val id = jsonObject.getInt("id")
+        val id = jsonObject.optInt("id")
         val uuid = jsonObject.getString("uuid")
         val text = jsonObject.optString("text")
         val answer = jsonObject.optString("answer")
@@ -47,10 +46,9 @@ class ModelManager {
 
     fun parseUser(jsonObject: JSONObject?): User? {
         if (jsonObject == null) return null
-        if (!jsonObject.has("id")) return null
         if (!jsonObject.has("uuid")) return null
 
-        val id = jsonObject.getInt("id")
+        val id = jsonObject.optInt("id")
         val uuid = jsonObject.getString("uuid")
         val createdAt = jsonObject.optString("created_at")
         val username = jsonObject.optString("username")
@@ -62,10 +60,9 @@ class ModelManager {
 
     fun parsePhoto(jsonObject: JSONObject?): Photo? {
         if (jsonObject == null) return null
-        if (!jsonObject.has("id")) return null
         if (!jsonObject.has("uuid")) return null
 
-        val id = jsonObject.getInt("id")
+        val id = jsonObject.optInt("id")
         val uuid = jsonObject.getString("uuid")
         val createdAt = jsonObject.optString("created_at")
         val url = jsonObject.optString("url")
@@ -76,10 +73,9 @@ class ModelManager {
 
     fun parseLike(jsonObject: JSONObject?): Like? {
         if (jsonObject == null) return null
-        if (!jsonObject.has("id")) return null
         if (!jsonObject.has("uuid")) return null
 
-        val id = jsonObject.getInt("id")
+        val id = jsonObject.optInt("id")
         val uuid = jsonObject.getString("uuid")
         val createdAt = jsonObject.optString("created_at")
         val type = jsonObject.optInt("type")

@@ -41,7 +41,7 @@ interface JokesPresentationLogic {
 class JokesPresenter(displayLogic: JokesDisplayLogic) : JokesPresentationLogic {
     var displayer: WeakReference<JokesDisplayLogic>? = null
 
-    var timeDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SS", Locale.getDefault())
+    var timeDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
 
     init {
         this.displayer = WeakReference(displayLogic)
@@ -86,9 +86,9 @@ class JokesPresenter(displayLogic: JokesDisplayLogic) : JokesPresentationLogic {
     }
 
     //region Items
-    private fun displayedItems(items: ArrayList<Joke>, readJokes: ArrayList<Joke>): ArrayList<JokesModels.DisplayedItem> {
+    private fun displayedItems(items: ArrayList<Joke>, readJokes: ArrayList<Joke>): ArrayList<Any> {
         if (items.size == 0) return arrayListOf()
-        val displayedItems: ArrayList<JokesModels.DisplayedItem> = arrayListOf()
+        val displayedItems: ArrayList<Any> = arrayListOf()
         displayedItems.add(this.displayedSpaceItem(ApplicationConstraints.constant.x16.value))
         items.forEachIndexed { index, item ->
             val isRead = readJokes.any { it.uuid == item.uuid }
@@ -169,6 +169,7 @@ class JokesPresenter(displayLogic: JokesDisplayLogic) : JokesPresentationLogic {
         likeCount.backgroundColor = JokesStyle.instance.jokeCellModel.unselectedLikeCountBackgroundColor()
         likeCount.title = joke.likeCount.toString().toSpannableString(JokesStyle.instance.jokeCellModel.unselectedLikeCountSpans())
         likeCount.borderRadius = ApplicationConstraints.constant.x12.value
+        likeCount.borderColor = JokesStyle.instance.jokeCellModel.likeCountBorderColor()
         likeCount.isDisabled = true
         likeCount.isLoading = false
         return likeCount
@@ -182,6 +183,7 @@ class JokesPresenter(displayLogic: JokesDisplayLogic) : JokesPresentationLogic {
         dislikeCount.backgroundColor = JokesStyle.instance.jokeCellModel.unselectedDislikeCountBackgroundColor()
         dislikeCount.title = joke.dislikeCount.toString().toSpannableString(JokesStyle.instance.jokeCellModel.unselectedDislikeCountSpans())
         dislikeCount.borderRadius = ApplicationConstraints.constant.x12.value
+        dislikeCount.borderColor = JokesStyle.instance.jokeCellModel.dislikeCountBorderColor()
         dislikeCount.isDisabled = true
         dislikeCount.isLoading = false
         return dislikeCount

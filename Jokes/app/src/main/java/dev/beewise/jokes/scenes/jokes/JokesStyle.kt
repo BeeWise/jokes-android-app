@@ -1,7 +1,9 @@
 package dev.beewise.jokes.scenes.jokes
 
 import android.graphics.drawable.Drawable
+import android.text.Layout
 import android.text.style.AbsoluteSizeSpan
+import android.text.style.AlignmentSpan
 import android.text.style.ForegroundColorSpan
 import dev.beewise.jokes.extensions.font_span.FontSpan
 import dev.beewise.jokes.style.ApplicationConstraints
@@ -29,14 +31,16 @@ public class JokesStyle {
             return arrayListOf(
                 ForegroundColorSpan(ApplicationStyle.instance.gray()),
                 FontSpan(ApplicationStyle.instance.regular()),
-                AbsoluteSizeSpan(14, true)
+                AbsoluteSizeSpan(14, true),
+                AlignmentSpan { Layout.Alignment.ALIGN_CENTER }
             )
         }
         fun errorSpans(): ArrayList<Any> {
             return arrayListOf(
                 ForegroundColorSpan(ApplicationStyle.instance.secondary()),
                 FontSpan(ApplicationStyle.instance.regular()),
-                AbsoluteSizeSpan(14, true)
+                AbsoluteSizeSpan(14, true),
+                AlignmentSpan { Layout.Alignment.ALIGN_CENTER }
             )
         }
     }
@@ -84,6 +88,7 @@ public class JokesStyle {
         }
 
         fun likeCountActivityColor(): Int { return ApplicationStyle.instance.gray() }
+        fun likeCountBorderColor(): Int { return ApplicationStyle.instance.transparent() }
         fun likeCountImage(): Drawable { return ApplicationStyle.instance.likeSmallImage(ApplicationStyle.ImageType.drawable) }
         fun unselectedLikeCountBackgroundColor(): Int { return ApplicationStyle.instance.transparent() }
         fun unselectedLikeCountTintColor(): Int { return ApplicationStyle.instance.gray() }
@@ -96,6 +101,7 @@ public class JokesStyle {
         }
 
         fun dislikeCountActivityColor(): Int { return ApplicationStyle.instance.primary() }
+        fun dislikeCountBorderColor(): Int { return ApplicationStyle.instance.transparent() }
         fun dislikeCountImage(): Drawable { return ApplicationStyle.instance.dislikeSmallImage(ApplicationStyle.ImageType.drawable) }
         fun unselectedDislikeCountBackgroundColor(): Int { return ApplicationStyle.instance.transparent() }
         fun unselectedDislikeCountTintColor(): Int { return ApplicationStyle.instance.gray() }
