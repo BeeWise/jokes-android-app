@@ -7,6 +7,7 @@ import android.text.SpannableString
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
@@ -111,7 +112,7 @@ class JokeQuestionAnswerCell(itemView: View) : RecyclerView.ViewHolder(itemView)
 
         val view = ConstraintLayout(this.itemView.context)
         view.id = View.generateViewId()
-        view.layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        view.layoutParams = ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.WRAP_CONTENT)
         view.background = drawable
         this.contentView.addView(view)
         this.containerView = view
@@ -194,7 +195,7 @@ class JokeQuestionAnswerCell(itemView: View) : RecyclerView.ViewHolder(itemView)
         val view = ImageTitleButton(this.itemView.context)
         view.id = View.generateViewId()
         view.visibility = View.GONE
-        view.layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, 0)
+        view.layoutParams = ConstraintLayout.LayoutParams(0, 0)
         view.setOnClickListener {
             this.delegate?.get()?.jokeQuestionAnswerCellOnPressReadAnswer(this, this.cellModel?.id)
         }
@@ -212,7 +213,7 @@ class JokeQuestionAnswerCell(itemView: View) : RecyclerView.ViewHolder(itemView)
         val model = ImageTitleButton.Model()
         model.image = CompoundImage(null, null, ApplicationStyle.instance.answerSmallImage(ApplicationStyle.ImageType.drawable))
         model.isDisabled = false
-        model.backgroundImage = CompoundImage(null, null, ApplicationStyle.instance.buttonBackgroundImage(ApplicationStyle.ImageType.drawable))
+        model.backgroundImage = CompoundImage(null, null, ApplicationStyle.instance.buttonBackgroundImage(ApplicationStyle.ImageType.drawable), ImageView.ScaleType.CENTER_CROP)
         model.borderRadius = ApplicationConstraints.constant.x16.value
         model.borderColor = ApplicationStyle.instance.white()
         model.backgroundColor = ApplicationStyle.instance.primary()
@@ -254,8 +255,8 @@ class JokeQuestionAnswerCell(itemView: View) : RecyclerView.ViewHolder(itemView)
         val textView = TextView(this.itemView.context)
         textView.id = View.generateViewId()
         textView.layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
-        this.topContainerView.addView(textView)
-        this.usernameTextView = textView
+        this.bottomContainerView.addView(textView)
+        this.timeTextView = textView
     }
 
     private fun setupSubviewsConstraints() {
@@ -409,18 +410,18 @@ class JokeQuestionAnswerCell(itemView: View) : RecyclerView.ViewHolder(itemView)
             this.endToStart = this@JokeQuestionAnswerCell.dislikeCountView.id
 
             this.height = ApplicationConstraints.constant.x24.value
-
-            this.marginEnd = ApplicationConstraints.constant.x8.value
         }
     }
 
     private fun setupDislikeCountViewConstraints() {
-        this.likeCountView.updateLayoutParams<ConstraintLayout.LayoutParams> {
+        this.dislikeCountView.updateLayoutParams<ConstraintLayout.LayoutParams> {
             this.startToEnd = this@JokeQuestionAnswerCell.likeCountView.id
             this.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
             this.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
 
             this.height = ApplicationConstraints.constant.x24.value
+
+            this.marginStart = ApplicationConstraints.constant.x8.value
         }
     }
 

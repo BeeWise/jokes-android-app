@@ -95,7 +95,7 @@ class JokeTextCell(itemView: View) : RecyclerView.ViewHolder(itemView), UserAvat
 
         val view = ConstraintLayout(this.itemView.context)
         view.id = View.generateViewId()
-        view.layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        view.layoutParams = ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.WRAP_CONTENT)
         view.background = drawable
         this.contentView.addView(view)
         this.containerView = view
@@ -191,8 +191,8 @@ class JokeTextCell(itemView: View) : RecyclerView.ViewHolder(itemView), UserAvat
         val textView = TextView(this.itemView.context)
         textView.id = View.generateViewId()
         textView.layoutParams = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
-        this.topContainerView.addView(textView)
-        this.usernameTextView = textView
+        this.bottomContainerView.addView(textView)
+        this.timeTextView = textView
     }
 
     private fun setupSubviewsConstraints() {
@@ -310,18 +310,18 @@ class JokeTextCell(itemView: View) : RecyclerView.ViewHolder(itemView), UserAvat
             this.endToStart = this@JokeTextCell.dislikeCountView.id
 
             this.height = ApplicationConstraints.constant.x24.value
-
-            this.marginEnd = ApplicationConstraints.constant.x8.value
         }
     }
 
     private fun setupDislikeCountViewConstraints() {
-        this.likeCountView.updateLayoutParams<ConstraintLayout.LayoutParams> {
+        this.dislikeCountView.updateLayoutParams<ConstraintLayout.LayoutParams> {
             this.startToEnd = this@JokeTextCell.likeCountView.id
             this.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
             this.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
 
             this.height = ApplicationConstraints.constant.x24.value
+
+            this.marginStart = ApplicationConstraints.constant.x8.value
         }
     }
 

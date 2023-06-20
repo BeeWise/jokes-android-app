@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.constraintlayout.utils.widget.ImageFilterView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
 import dev.beewise.jokes.models.image.CompoundImage
@@ -22,7 +23,6 @@ class ImageTitleButton: ConstraintLayout {
 
         var title: SpannableString? = null
 
-        // TODO: - Add logic for setting up the background image!
         var backgroundImage: CompoundImage? = null
 
         var borderRadius = ApplicationConstraints.constant.x4.value
@@ -38,6 +38,8 @@ class ImageTitleButton: ConstraintLayout {
         var opacity = 1.0F
     }
 
+    lateinit var backgroundImageView: ImageFilterView
+    lateinit var containerView: ConstraintLayout
     lateinit var imageView: ImageView
     lateinit var textView: TextView
     lateinit var progressBar: ProgressBar
@@ -60,26 +62,44 @@ class ImageTitleButton: ConstraintLayout {
     }
 
     private fun setupSubviews() {
+        this.setupBackgroundImageView()
+        this.setupContainerView()
         this.setupImageView()
         this.setupTextView()
         this.setupProgressBar()
+    }
+
+    private fun setupBackgroundImageView() {
+        val imageView = ImageFilterView(this.context)
+        imageView.id = View.generateViewId()
+        imageView.layoutParams = LayoutParams(0, 0)
+        imageView.visibility = View.GONE
+        this.addView(imageView)
+        this.backgroundImageView = imageView
+    }
+
+    private fun setupContainerView() {
+        val view = ConstraintLayout(this.context)
+        view.id = View.generateViewId()
+        view.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        this.addView(view)
+        this.containerView = view
     }
 
     private fun setupImageView() {
         val imageView = ImageView(this.context)
         imageView.id = View.generateViewId()
         imageView.layoutParams = LayoutParams(0, 0)
-        imageView.adjustViewBounds = true
-        this.addView(imageView)
+        this.containerView.addView(imageView)
         this.imageView = imageView
     }
 
     private fun setupTextView() {
         val textView = TextView(this.context)
         textView.id = View.generateViewId()
-        textView.layoutParams = LayoutParams(0, LayoutParams.WRAP_CONTENT)
+        textView.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         textView.setLines(1)
-        this.addView(textView)
+        this.containerView.addView(textView)
         this.textView = textView
     }
 
@@ -89,14 +109,34 @@ class ImageTitleButton: ConstraintLayout {
         progressBar.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         progressBar.isIndeterminate = true
         progressBar.visibility = View.INVISIBLE
-        this.addView(progressBar)
+        this.containerView.addView(progressBar)
         this.progressBar = progressBar
     }
 
     private fun setupSubviewsConstraints() {
+        this.setupBackgroundImageViewConstraints()
+        this.setupContainerViewConstraints()
         this.setupImageViewConstraints()
         this.setupTextViewConstraints()
         this.setupProgressBarConstraints()
+    }
+
+    private fun setupBackgroundImageViewConstraints() {
+        this.backgroundImageView.updateLayoutParams<LayoutParams> {
+            this.startToStart = LayoutParams.PARENT_ID
+            this.endToEnd = LayoutParams.PARENT_ID
+            this.topToTop = LayoutParams.PARENT_ID
+            this.bottomToBottom = LayoutParams.PARENT_ID
+        }
+    }
+
+    private fun setupContainerViewConstraints() {
+        this.containerView.updateLayoutParams<LayoutParams> {
+            this.topToTop = LayoutParams.PARENT_ID
+            this.bottomToBottom = LayoutParams.PARENT_ID
+            this.startToStart = LayoutParams.PARENT_ID
+            this.endToEnd = LayoutParams.PARENT_ID
+        }
     }
 
     private fun setupImageViewConstraints() {
@@ -106,7 +146,6 @@ class ImageTitleButton: ConstraintLayout {
             this.topToTop = LayoutParams.PARENT_ID
             this.bottomToBottom = LayoutParams.PARENT_ID
 
-            this.marginStart = ApplicationConstraints.constant.x10.value
             this.dimensionRatio = "1:1"
             this.matchConstraintPercentHeight = 0.62F
         }
@@ -119,8 +158,7 @@ class ImageTitleButton: ConstraintLayout {
             this.topToTop = LayoutParams.PARENT_ID
             this.bottomToBottom = LayoutParams.PARENT_ID
 
-            this.marginStart = ApplicationConstraints.constant.x10.value
-            this.marginEnd = ApplicationConstraints.constant.x10.value
+            this.marginStart = ApplicationConstraints.constant.x8.value
         }
     }
 
@@ -142,8 +180,18 @@ class ImageTitleButton: ConstraintLayout {
         drawable.setStroke(model.borderWidth, model.borderColor)
         this.background = drawable
 
+        if (model.backgroundImage != null) {
+            this.backgroundImageView.setImageDrawable(model.backgroundImage?.drawable)
+            this.backgroundImageView.scaleType = model.backgroundImage?.scaleType
+            this.backgroundImageView.visibility = View.VISIBLE
+            this.backgroundImageView.round = model.borderRadius.toFloat()
+        } else {
+            this.backgroundImageView.visibility = View.GONE
+        }
+
         this.progressBar.indeterminateTintList = ColorStateList.valueOf(model.activityIndicatorColor)
         this.textView.text = model.title
+
         this.imageView.setImageDrawable(model.image?.drawable)
         this.imageView.scaleType = model.image?.scaleType
         this.imageView.imageTintList = model.imageTintColor?.let { ColorStateList.valueOf(it) }

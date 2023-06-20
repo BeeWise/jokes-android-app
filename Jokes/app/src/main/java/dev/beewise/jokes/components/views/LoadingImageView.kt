@@ -8,11 +8,10 @@ import android.widget.ProgressBar
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.constraintlayout.utils.widget.ImageFilterView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
 import coil.load
-import com.google.android.material.imageview.ShapeableImageView
-import com.google.android.material.shape.CornerFamily
 import dev.beewise.jokes.models.image.CompoundImage
 
 class LoadingImageView: ConstraintLayout {
@@ -22,7 +21,7 @@ class LoadingImageView: ConstraintLayout {
         var borderRadius: Float = 0F
     }
 
-    var imageView: ShapeableImageView? = null
+    var imageView: ImageFilterView? = null
     var progressBar: ProgressBar? = null
 
     constructor(context: Context) : super(context) {
@@ -48,10 +47,9 @@ class LoadingImageView: ConstraintLayout {
     }
 
     private fun setupImageView() {
-        val imageView = ShapeableImageView(this.context)
+        val imageView = ImageFilterView(this.context)
         imageView.id = View.generateViewId()
         imageView.layoutParams = LayoutParams(0, 0)
-        imageView.adjustViewBounds = true
         this.addView(imageView)
         this.imageView = imageView
     }
@@ -104,10 +102,10 @@ class LoadingImageView: ConstraintLayout {
     private fun setImage(model: CompoundImage, radius: Float) {
         if (model.drawable != null) {
             this.imageView?.setImageDrawable(model.drawable)
-            this.imageView?.shapeAppearanceModel?.toBuilder()?.setAllCorners(CornerFamily.ROUNDED, radius)?.build()?.let { this.imageView?.shapeAppearanceModel = it }
+            this.imageView?.round = radius
         } else if (model.bitmap != null) {
             this.imageView?.setImageBitmap(model.bitmap)
-            this.imageView?.shapeAppearanceModel?.toBuilder()?.setAllCorners(CornerFamily.ROUNDED, radius)?.build()?.let { this.imageView?.shapeAppearanceModel = it }
+            this.imageView?.round = radius
         } else if (!model.url.isNullOrEmpty()) {
             this.imageView?.load(model.url) {
                 Modifier.clip(RoundedCornerShape(radius))

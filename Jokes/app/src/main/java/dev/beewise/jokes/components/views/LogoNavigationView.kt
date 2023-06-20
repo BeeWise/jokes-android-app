@@ -77,7 +77,6 @@ class LogoNavigationView: ConstraintLayout, UserAvatarViewDelegate {
         imageView.setOnClickListener {
             this.delegate?.get()?.logoNavigationViewOnPressLogoImage(this)
         }
-        imageView.visibility = View.GONE
         this.addView(imageView)
         this.logoImageView = imageView
     }
