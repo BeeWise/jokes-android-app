@@ -1,5 +1,6 @@
 package dev.beewise.jokes.scenes.jokes
 
+import android.graphics.Bitmap
 import android.text.SpannableString
 import dev.beewise.jokes.models.joke.Joke
 import dev.beewise.jokes.operations.base.errors.OperationError
@@ -66,5 +67,19 @@ class JokesModels {
         class Response(val animated: Boolean, val index: Int)
 
         class ViewModel(val animated: Boolean, val index: Int)
+    }
+
+    class UserAvatarImage {
+        class Request(val uuid: String?, val hasImage: Boolean, val isLoadingImage: Boolean)
+
+        class Response(val uuid: String?, val image: Bitmap?)
+
+        class ViewModel(val uuid: String?, val image: Bitmap?)
+    }
+
+    class UserAvatarImageLoadingState {
+        class Response(val uuid: String?, val isLoadingImage: Boolean)
+
+        class ViewModel(val uuid: String?, val isLoadingImage: Boolean)
     }
 }

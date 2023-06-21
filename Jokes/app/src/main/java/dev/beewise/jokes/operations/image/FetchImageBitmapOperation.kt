@@ -1,5 +1,6 @@
 package dev.beewise.jokes.operations.image
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
@@ -7,8 +8,12 @@ import dev.beewise.jokes.operations.base.errors.OperationError
 import dev.beewise.jokes.operations.base.operations.Operation
 import dev.beewise.jokes.operations.base.operations.Result
 import android.os.Handler
+import android.util.Log
 import com.bumptech.glide.Glide
+import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import dev.beewise.jokes.R
@@ -19,8 +24,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@GlideModule
+class JokesGlideModule: AppGlideModule() {
+    override fun applyOptions(context: Context, builder: GlideBuilder) {
+        super.applyOptions(context, builder)
+    }
+}
+
 class FetchImageBitmapOperationModels {
-    class Request(val imageUrl: String?)
+    class Request(val imageUrl: String?, val isRounded: Boolean)
 
     class Response(val bitmap: Bitmap)
 }
@@ -37,7 +49,38 @@ open class FetchImageBitmapOperation(val model: FetchImageBitmapOperationModels.
 
     override fun run(completion: (() -> Unit)?) {
         super.run(completion)
+
+        if (this.model.isRounded) {
+            this.loadRoundedImage()
+        } else {
+            this.loadImage()
+        }
+    }
+
+    private fun loadImage() {
         this.customTarget = this.requestBuilder?.load(this.model.imageUrl)?.into(object : CustomTarget<Bitmap>(){
+            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                if (this@FetchImageBitmapOperation.shouldCancelOperation()) {
+                    this@FetchImageBitmapOperation.clearResources()
+                    return
+                }
+                this@FetchImageBitmapOperation.successfulResultBlock(resource)
+            }
+
+            override fun onLoadCleared(placeholder: Drawable?) {
+                this@FetchImageBitmapOperation.noDataAvailableErrorBlock()
+                this@FetchImageBitmapOperation.clearResources()
+            }
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                this@FetchImageBitmapOperation.noDataAvailableErrorBlock()
+                this@FetchImageBitmapOperation.clearResources()
+            }
+        })
+    }
+
+    private fun loadRoundedImage() {
+        this.customTarget = this.requestBuilder?.load(this.model.imageUrl)?.circleCrop()?.into(object : CustomTarget<Bitmap>(){
             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                 if (this@FetchImageBitmapOperation.shouldCancelOperation()) {
                     this@FetchImageBitmapOperation.clearResources()

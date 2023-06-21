@@ -11,6 +11,8 @@ import java.lang.ref.WeakReference
 
 interface JokesAdapterDelegate {
     fun jokesAdapterJokeQuestionAnswerCellOnPressReadAnswer(adapter: JokesAdapter, id: String?)
+    fun jokesAdapterJokeQuestionAnswerCellShouldFetchUserAvatarImage(adapter: JokesAdapter, id: String?, hasImage: Boolean, isLoadingImage: Boolean)
+    fun jokesAdapterJokeTextCellShouldFetchUserAvatarImage(adapter: JokesAdapter, id: String?, hasImage: Boolean, isLoadingImage: Boolean)
 }
 
 open class JokesAdapter(delegate: JokesAdapterDelegate) : FetchingItemsRecyclerViewAdapter(), JokeTextCellDelegate, JokeQuestionAnswerCellDelegate {
@@ -54,6 +56,8 @@ open class JokesAdapter(delegate: JokesAdapterDelegate) : FetchingItemsRecyclerV
         val model = displayedItem.model as? JokeTextCell.Model ?: return
         cell.setModel(model)
         cell.delegate = WeakReference(this)
+
+        this.delegate?.get()?.jokesAdapterJokeTextCellShouldFetchUserAvatarImage(this, model.id, model.avatar.loadingImage.image.bitmap != null, model.avatar.loadingImage.isLoading)
     }
 
     override fun jokeTextCellOnPressUserAvatar(cell: JokeTextCell, id: String?) {
@@ -79,6 +83,8 @@ open class JokesAdapter(delegate: JokesAdapterDelegate) : FetchingItemsRecyclerV
         val model = displayedItem.model as? JokeQuestionAnswerCell.Model ?: return
         cell.setModel(model)
         cell.delegate = WeakReference(this)
+
+        this.delegate?.get()?.jokesAdapterJokeQuestionAnswerCellShouldFetchUserAvatarImage(this, model.id, model.avatar.loadingImage.image.bitmap != null, model.avatar.loadingImage.isLoading)
     }
 
     override fun jokeQuestionAnswerCellOnPressUserAvatar(cell: JokeQuestionAnswerCell, id: String?) {
@@ -118,6 +124,18 @@ open class JokesAdapter(delegate: JokesAdapterDelegate) : FetchingItemsRecyclerV
         this.items.forEachIndexed { index, item ->
             if (item is JokesModels.DisplayedItem && item.type == JokesModels.ItemType.jokeQna) {
                 val model = item.model as? JokeQuestionAnswerCell.Model ?: return null
+                if (model.id == id) {
+                    return Pair(index, model)
+                }
+            }
+        }
+        return null
+    }
+
+    fun getIndexedJokeTextModel(id: String?): Pair<Int, JokeTextCell.Model>? {
+        this.items.forEachIndexed { index, item ->
+            if (item is JokesModels.DisplayedItem && item.type == JokesModels.ItemType.jokeText) {
+                val model = item.model as? JokeTextCell.Model ?: return null
                 if (model.id == id) {
                     return Pair(index, model)
                 }

@@ -11,7 +11,7 @@ import dev.beewise.jokes.tasks.task_protocol.TaskProtocol
 
 public class ImageTaskModels {
     public class FetchImageBitmap {
-        public class Request(val imageUrl: String)
+        public class Request(val imageUrl: String, val isRounded: Boolean)
 
         public class Response(val bitmap: Bitmap)
     }
@@ -25,7 +25,7 @@ class ImageTask(override var environment: TaskEnvironment): ImageTaskProtocol {
     public var fetchImageBitmapOperationQueue = OperationQueue()
     
     override fun fetchImageBitmap(model: ImageTaskModels.FetchImageBitmap.Request, completionHandler: Result<ImageTaskModels.FetchImageBitmap.Response>) {
-        val operationModel = FetchImageBitmapOperationModels.Request(model.imageUrl)
+        val operationModel = FetchImageBitmapOperationModels.Request(model.imageUrl, model.isRounded)
         val operation = this.fetchImageBitmapOperation(operationModel, completionHandler)
         this.fetchImageBitmapOperationQueue.addOperation(operation)
     }

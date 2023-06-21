@@ -37,6 +37,9 @@ interface JokesDisplayLogic {
     fun displayReadState(viewModel: JokesModels.ItemReadState.ViewModel)
 
     fun displayScrollToItem(viewModel: JokesModels.ItemScroll.ViewModel)
+
+    fun displayUserAvatarImage(viewModel: JokesModels.UserAvatarImage.ViewModel)
+    fun displayUserAvatarImageLoadingState(viewModel: JokesModels.UserAvatarImageLoadingState.ViewModel)
 }
 
 public interface JokesFragmentDelegate {
@@ -141,6 +144,14 @@ class JokesFragment: Fragment(), JokesDisplayLogic, JokesAdapterDelegate, LogoNa
 
     override fun jokesAdapterJokeQuestionAnswerCellOnPressReadAnswer(adapter: JokesAdapter, id: String?) {
         this.interactor?.shouldSelectReadAnswer(JokesModels.ItemSelection.Request(id))
+    }
+
+    override fun jokesAdapterJokeQuestionAnswerCellShouldFetchUserAvatarImage(adapter: JokesAdapter, id: String?, hasImage: Boolean, isLoadingImage: Boolean) {
+        this.interactor?.shouldFetchUserAvatarImage(JokesModels.UserAvatarImage.Request(id, hasImage, isLoadingImage))
+    }
+
+    override fun jokesAdapterJokeTextCellShouldFetchUserAvatarImage(adapter: JokesAdapter, id: String?, hasImage: Boolean, isLoadingImage: Boolean) {
+        this.interactor?.shouldFetchUserAvatarImage(JokesModels.UserAvatarImage.Request(id, hasImage, isLoadingImage))
     }
 
     private fun setupRecyclerView() {
@@ -255,6 +266,30 @@ class JokesFragment: Fragment(), JokesDisplayLogic, JokesAdapterDelegate, LogoNa
     override fun displayScrollToItem(viewModel: JokesModels.ItemScroll.ViewModel) {
         this.runOnUiThread { 
             this.recyclerView.scrollToPosition(viewModel.index)
+        }
+    }
+
+    override fun displayUserAvatarImage(viewModel: JokesModels.UserAvatarImage.ViewModel) {
+        this.runOnUiThread {
+            this.adapter.getIndexedJokeTextModel(viewModel.uuid)?.let {
+                it.second.avatar.loadingImage.image.bitmap = viewModel.image
+                it.second.avatar.loadingImage.viewInterface?.get()?.setImage(it.second.avatar.loadingImage.image)
+            } ?: this.adapter.getIndexedJokeQnaModel(viewModel.uuid)?.let {
+                it.second.avatar.loadingImage.image.bitmap = viewModel.image
+                it.second.avatar.loadingImage.viewInterface?.get()?.setImage(it.second.avatar.loadingImage.image)
+            }
+        }
+    }
+
+    override fun displayUserAvatarImageLoadingState(viewModel: JokesModels.UserAvatarImageLoadingState.ViewModel) {
+        this.runOnUiThread {
+            this.adapter.getIndexedJokeTextModel(viewModel.uuid)?.let {
+                it.second.avatar.loadingImage.isLoading = viewModel.isLoadingImage
+                it.second.avatar.loadingImage.viewInterface?.get()?.setIsLoadingImage(viewModel.isLoadingImage)
+            } ?: this.adapter.getIndexedJokeQnaModel(viewModel.uuid)?.let {
+                it.second.avatar.loadingImage.isLoading = viewModel.isLoadingImage
+                it.second.avatar.loadingImage.viewInterface?.get()?.setIsLoadingImage(viewModel.isLoadingImage)
+            }
         }
     }
     //endregion

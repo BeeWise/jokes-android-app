@@ -4,21 +4,25 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.View
+import android.view.ViewOutlineProvider
 import android.widget.ProgressBar
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.constraintlayout.utils.widget.ImageFilterView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
-import coil.load
 import dev.beewise.jokes.models.image.CompoundImage
+import java.lang.ref.WeakReference
 
-class LoadingImageView: ConstraintLayout {
+interface LoadingImageViewInterface {
+    fun setIsLoadingImage(isLoadingImage: Boolean)
+    fun setImage(image: CompoundImage)
+}
+
+class LoadingImageView: ConstraintLayout, LoadingImageViewInterface {
     class Model(var image: CompoundImage, var isLoading: Boolean) {
         var activityIndicatorColor: Int? = null
         var imageBackgroundColor: Int? = null
         var borderRadius: Float = 0F
+        var viewInterface: WeakReference<LoadingImageViewInterface>? = null
     }
 
     var imageView: ImageFilterView? = null
@@ -42,8 +46,14 @@ class LoadingImageView: ConstraintLayout {
     }
 
     private fun setupSubviews() {
+        this.setupView()
         this.setupImageView()
         this.setupProgressBar()
+    }
+
+    private fun setupView() {
+        this.outlineProvider = ViewOutlineProvider.BACKGROUND
+        this.clipToOutline = true
     }
 
     private fun setupImageView() {
@@ -57,7 +67,7 @@ class LoadingImageView: ConstraintLayout {
     private fun setupProgressBar() {
         val progressBar = ProgressBar(this.context)
         progressBar.id = View.generateViewId()
-        progressBar.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        progressBar.layoutParams = LayoutParams(0, 0)
         progressBar.isIndeterminate = true
         progressBar.visibility = View.INVISIBLE
         this.addView(progressBar)
@@ -84,32 +94,36 @@ class LoadingImageView: ConstraintLayout {
             this.bottomToBottom = LayoutParams.PARENT_ID
             this.startToStart = LayoutParams.PARENT_ID
             this.endToEnd = LayoutParams.PARENT_ID
+
+            this.dimensionRatio = "1:1"
+            this.matchConstraintPercentHeight = 0.62F
         }
     }
 
     fun setModel(model: Model) {
-        this.progressBar?.visibility = if (model.isLoading) View.VISIBLE else View.INVISIBLE
-        this.progressBar?.indeterminateTintList = model.activityIndicatorColor?.let { ColorStateList.valueOf(it) }
+        model.viewInterface = WeakReference(this)
 
-        this.setImage(model.image, model.borderRadius)
-        this.imageView?.scaleType = model.image.scaleType
+        this.setIsLoadingImage(model.isLoading)
+        this.setImage(model.image)
+
+        this.progressBar?.indeterminateTintList = model.activityIndicatorColor?.let { ColorStateList.valueOf(it) }
+        this.imageView?.round = model.borderRadius
 
         if (model.imageBackgroundColor != null) {
             this.imageView?.setBackgroundColor(model.imageBackgroundColor!!)
         }
     }
 
-    private fun setImage(model: CompoundImage, radius: Float) {
-        if (model.drawable != null) {
-            this.imageView?.setImageDrawable(model.drawable)
-            this.imageView?.round = radius
-        } else if (model.bitmap != null) {
-            this.imageView?.setImageBitmap(model.bitmap)
-            this.imageView?.round = radius
-        } else if (!model.url.isNullOrEmpty()) {
-            this.imageView?.load(model.url) {
-                Modifier.clip(RoundedCornerShape(radius))
-            }
+    override fun setImage(image: CompoundImage) {
+        if (image.bitmap != null) {
+            this.imageView?.setImageBitmap(image.bitmap)
+        } else if (image.drawable != null) {
+            this.imageView?.setImageDrawable(image.drawable)
         }
+    }
+
+    override fun setIsLoadingImage(isLoadingImage: Boolean) {
+        this.progressBar?.visibility = if (isLoadingImage) View.VISIBLE else View.INVISIBLE
+        this.imageView?.visibility = if (isLoadingImage) View.INVISIBLE else View.VISIBLE
     }
 }

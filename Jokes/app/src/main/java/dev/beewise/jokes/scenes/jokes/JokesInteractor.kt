@@ -1,5 +1,6 @@
 package dev.beewise.jokes.scenes.jokes
 
+import android.graphics.Bitmap
 import dev.beewise.jokes.models.joke.Joke
 import dev.beewise.jokes.models.joke.JokeOrderBy
 import dev.beewise.jokes.operations.base.errors.OperationError
@@ -12,6 +13,8 @@ interface JokesBusinessLogic {
     fun shouldSelectReadAnswer(request: JokesModels.ItemSelection.Request)
 
     fun shouldSelectLogo()
+
+    fun shouldFetchUserAvatarImage(request: JokesModels.UserAvatarImage.Request)
 }
 
 class JokesInteractor : JokesBusinessLogic, JokesWorkerDelegate {
@@ -90,5 +93,26 @@ class JokesInteractor : JokesBusinessLogic, JokesWorkerDelegate {
 
     override fun shouldSelectLogo() {
         this.presenter?.presentScrollToItem(JokesModels.ItemScroll.Response(false, 0))
+    }
+
+    override fun shouldFetchUserAvatarImage(request: JokesModels.UserAvatarImage.Request) {
+        if (request.hasImage) {
+            return
+        }
+        val uuid = request.uuid
+        val imageUrl = this.joke(request.uuid)?.user?.photo?.url150
+        if (!imageUrl.isNullOrEmpty() && !request.isLoadingImage) {
+            this.presenter?.presentUserAvatarImageLoadingState(JokesModels.UserAvatarImageLoadingState.Response(uuid, true))
+            this.worker?.fetchUserAvatarImage(uuid, imageUrl, true)
+        }
+    }
+
+    override fun successDidFetchUserAvatarImage(uuid: String?, image: Bitmap?) {
+        this.presenter?.presentUserAvatarImageLoadingState(JokesModels.UserAvatarImageLoadingState.Response(uuid, false))
+        this.presenter?.presentUserAvatarImage(JokesModels.UserAvatarImage.Response(uuid, image))
+    }
+
+    override fun failureDidFetchUserAvatarImage(uuid: String?, error: OperationError) {
+        this.presenter?.presentUserAvatarImageLoadingState(JokesModels.UserAvatarImageLoadingState.Response(uuid, false))
     }
 }

@@ -211,9 +211,9 @@ class JokeQuestionAnswerCell(itemView: View) : RecyclerView.ViewHolder(itemView)
             AbsoluteSizeSpan(17, true)
         )
         val model = ImageTitleButton.Model()
-        model.image = CompoundImage(null, null, ApplicationStyle.instance.answerSmallImage(ApplicationStyle.ImageType.drawable))
+        model.image = CompoundImage(null, ApplicationStyle.instance.answerSmallImage(ApplicationStyle.ImageType.drawable))
         model.isDisabled = false
-        model.backgroundImage = CompoundImage(null, null, ApplicationStyle.instance.buttonBackgroundImage(ApplicationStyle.ImageType.drawable), ImageView.ScaleType.CENTER_CROP)
+        model.backgroundImage = CompoundImage(null, ApplicationStyle.instance.buttonBackgroundImage(ApplicationStyle.ImageType.drawable), ImageView.ScaleType.CENTER_CROP)
         model.borderRadius = ApplicationConstraints.constant.x16.value
         model.borderColor = ApplicationStyle.instance.white()
         model.backgroundColor = ApplicationStyle.instance.primary()
