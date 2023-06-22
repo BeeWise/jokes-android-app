@@ -1,8 +1,9 @@
 package dev.beewise.jokes.scenes.jokes
 
 import android.graphics.drawable.Drawable
-import android.text.format.DateUtils
 import android.widget.ImageView
+import com.github.marlonlom.utilities.timeago.TimeAgo
+import com.github.marlonlom.utilities.timeago.TimeAgoMessages
 import dev.beewise.jokes.application.JokesApplicationLocalization
 import dev.beewise.jokes.components.buttons.ImageTitleButton
 import dev.beewise.jokes.components.cells.JokeQuestionAnswerCell
@@ -10,6 +11,7 @@ import dev.beewise.jokes.components.cells.JokeTextCell
 import dev.beewise.jokes.components.cells.SpaceCell
 import dev.beewise.jokes.components.views.LoadingImageView
 import dev.beewise.jokes.components.views.UserAvatarView
+import dev.beewise.jokes.managers.LocalizationManager
 import dev.beewise.jokes.models.image.CompoundImage
 import dev.beewise.jokes.models.joke.Joke
 import dev.beewise.jokes.models.joke.JokeType
@@ -208,7 +210,18 @@ class JokesPresenter(displayLogic: JokesDisplayLogic) : JokesPresentationLogic {
         if (createdAt.isNullOrEmpty()) {
             return null
         }
-        return this.timeDateFormat.parse(createdAt)?.let { DateUtils.getRelativeTimeSpanString(it.time, Calendar.getInstance().timeInMillis, DateUtils.MINUTE_IN_MILLIS).toString() }
+
+        val locale = this.locale() ?: return null
+        val messages = TimeAgoMessages.Builder().withLocale(locale).build()
+        return this.timeDateFormat.parse(createdAt)?.let { TimeAgo.using(it.time, messages) }
+    }
+
+    private fun locale(): Locale? {
+        return when (LocalizationManager.instance.preferredLocalization()) {
+            "en" -> Locale("en")
+            "ro" -> Locale("ro")
+            else -> null
+        }
     }
 
     private fun usernameText(user: User?): String? {

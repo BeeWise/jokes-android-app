@@ -8,8 +8,6 @@ import dev.beewise.jokes.operations.base.errors.OperationError
 import dev.beewise.jokes.operations.base.operations.Operation
 import dev.beewise.jokes.operations.base.operations.Result
 import android.os.Handler
-import android.util.Log
-import com.bumptech.glide.Glide
 import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.annotation.GlideModule
@@ -117,7 +115,7 @@ open class FetchImageBitmapOperation(val model: FetchImageBitmapOperationModels.
     private fun clearResources() {
         ContextManager.instance.context?.get()?.let {
             Handler(it.mainLooper).post {
-                Glide.with(it).clear(this.customTarget)
+                GlideApp.with(it).clear(this.customTarget)
             }
         }
     }
@@ -142,7 +140,7 @@ open class FetchImageBitmapOperation(val model: FetchImageBitmapOperationModels.
     //region Request builder setup
     private fun setupRequestBuilder() {
         ContextManager.instance.context?.get()?.let {
-            this.requestBuilder = Glide.with(it).asBitmap().timeout(this.timeout)
+            this.requestBuilder = GlideApp.with(it).asBitmap().timeout(this.timeout)
         } ?: this.noDataAvailableErrorBlock()
     }
     //endregion

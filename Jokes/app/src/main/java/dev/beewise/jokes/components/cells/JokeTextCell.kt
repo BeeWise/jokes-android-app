@@ -321,7 +321,7 @@ class JokeTextCell(itemView: View) : RecyclerView.ViewHolder(itemView), UserAvat
 
             this.height = ApplicationConstraints.constant.x24.value
 
-            this.marginStart = ApplicationConstraints.constant.x8.value
+            this.marginStart = ApplicationConstraints.constant.x16.value
         }
     }
 

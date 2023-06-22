@@ -421,7 +421,7 @@ class JokeQuestionAnswerCell(itemView: View) : RecyclerView.ViewHolder(itemView)
 
             this.height = ApplicationConstraints.constant.x24.value
 
-            this.marginStart = ApplicationConstraints.constant.x8.value
+            this.marginStart = ApplicationConstraints.constant.x16.value
         }
     }
 
