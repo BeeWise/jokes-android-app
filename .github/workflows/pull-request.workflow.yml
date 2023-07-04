@@ -15,10 +15,9 @@ jobs:
 
     - uses: actions/setup-java@v3
       with:
-        distribution: 'temurin'
-        java-version: '11'
+        java-version: 1.8
 
-    - uses: gradle/gradle-build-action@v2
+    - uses: android-actions/setup-android@v2
 
     - name: "Create debug.properties file"
       run: "echo 'KEY_STORE_FILE_PATH = path\nKEY_STORE_PASSWORD = password\nKEY_ALIAS = alias\nKEY_ALIAS_PASSWORD = password\nTASK_CONFIGURATOR_ENVIRONMENT = \"development\"\nOPERATION_LOGGING_ENABLED = \"true\"\nJOKES_ENDPOINT = \"endpoint\"' > debug.properties"
