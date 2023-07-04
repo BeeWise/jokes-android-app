@@ -20,12 +20,12 @@ public class JokeTaskModels {
     }
 }
 
-public interface JokeTaskProtocol: TaskProtocol {
+interface JokeTaskProtocol: TaskProtocol {
     fun fetchJokes(model: JokeTaskModels.FetchJokes.Request, completionHandler: Result<JokeTaskModels.FetchJokes.Response>)
 }
 
-class JokeTask(override var environment: TaskEnvironment): JokeTaskProtocol {
-    public var fetchJokesOperationQueue = OperationQueue()
+open class JokeTask(override var environment: TaskEnvironment): JokeTaskProtocol {
+    private var fetchJokesOperationQueue = OperationQueue()
     
     override fun fetchJokes(model: JokeTaskModels.FetchJokes.Request, completionHandler: Result<JokeTaskModels.FetchJokes.Response>) {
         val operationModel = FetchJokesOperationModels.Request(model.page, model.limit, model.orderBy, model.startedAt, model.endedAt)
