@@ -1,13 +1,11 @@
 package dev.beewise.jokes.scenes.jokes
 
-/*
 import android.graphics.Bitmap
 import android.os.Looper
 import android.text.SpannableString
 import android.widget.ImageView
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.Lifecycle
-import androidx.test.platform.app.InstrumentationRegistry
 import dev.beewise.jokes.R
 import dev.beewise.jokes.components.cells.JokeQuestionAnswerCell
 import dev.beewise.jokes.components.cells.JokeTextCell
@@ -64,7 +62,7 @@ class JokesFragmentTests : RobolectricTestCase() {
         this.adapterSpy = JokesAdapterSpy(this.sut)
         this.sut.adapter = this.adapterSpy
 
-        this.recyclerViewSpy = RecyclerViewSpy(InstrumentationRegistry.getInstrumentation().targetContext)
+        this.recyclerViewSpy = RecyclerViewSpy(this.context())
         this.sut.recyclerView = this.recyclerViewSpy
     }
 
@@ -76,8 +74,7 @@ class JokesFragmentTests : RobolectricTestCase() {
 
     @Test
     fun testShouldSelectLogoShouldAskTheInteractorToSelectLogo() {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
-        this.sut.logoNavigationViewOnPressLogoImage(LogoNavigationView(context))
+        this.sut.logoNavigationViewOnPressLogoImage(LogoNavigationView(this.context()))
         this.waitForUIThread()
         assertTrue(this.interactorSpy.shouldSelectLogoCalled)
     }
@@ -257,4 +254,3 @@ class JokesFragmentTests : RobolectricTestCase() {
         return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
     }
 }
-*/
