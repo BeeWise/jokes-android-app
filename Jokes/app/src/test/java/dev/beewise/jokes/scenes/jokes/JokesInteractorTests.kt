@@ -1,19 +1,18 @@
 package dev.beewise.jokes.scenes.jokes
 
 import dev.beewise.jokes.models.joke.Joke
-import dev.beewise.jokes.models.joke.JokeStatus
-import dev.beewise.jokes.models.joke.JokeType
 import dev.beewise.jokes.models.photo.Photo
 import dev.beewise.jokes.models.user.User
 import dev.beewise.jokes.operations.base.errors.OperationError
 import dev.beewise.jokes.scenes.jokes.test_doubles.JokesPresentationLogicSpy
 import dev.beewise.jokes.scenes.jokes.test_doubles.JokesWorkerSpy
-import dev.beewise.jokes.test_cases.RobolectricTestCase
+//import dev.beewise.jokes.test_cases.RobolectricTestCase
+import junit.framework.TestCase
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-class JokesInteractorTests : RobolectricTestCase() {
+class JokesInteractorTests : TestCase() {
     lateinit var sut: JokesInteractor
     lateinit var presenterSpy: JokesPresentationLogicSpy
     lateinit var workerSpy: JokesWorkerSpy

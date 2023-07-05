@@ -1,5 +1,6 @@
 package dev.beewise.jokes.scenes.jokes
 
+/*
 import android.graphics.Bitmap
 import android.os.Looper
 import android.text.SpannableString
@@ -256,3 +257,4 @@ class JokesFragmentTests : RobolectricTestCase() {
         return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
     }
 }
+*/

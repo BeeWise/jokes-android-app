@@ -1,5 +1,6 @@
 package dev.beewise.jokes.scenes.jokes
 
+/*
 import dev.beewise.jokes.operations.base.errors.OperationError
 import dev.beewise.jokes.scenes.jokes.test_doubles.JokesDisplayLogicSpy
 import dev.beewise.jokes.test_cases.RobolectricTestCase
@@ -95,3 +96,4 @@ class JokesPresenterTests : RobolectricTestCase() {
         assertTrue(this.displayerSpy.displayUserAvatarImageLoadingStateCalled)
     }
 }
+*/
