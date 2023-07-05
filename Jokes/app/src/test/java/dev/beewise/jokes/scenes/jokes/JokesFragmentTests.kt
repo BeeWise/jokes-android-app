@@ -1,7 +1,6 @@
 package dev.beewise.jokes.scenes.jokes
 
 import android.graphics.Bitmap
-import android.os.Looper
 import android.text.SpannableString
 import android.widget.ImageView
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -22,7 +21,6 @@ import dev.beewise.jokes.test_cases.RobolectricTestCase
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.robolectric.Shadows
 import java.lang.ref.WeakReference
 
 class JokesFragmentTests : RobolectricTestCase() {
@@ -51,7 +49,6 @@ class JokesFragmentTests : RobolectricTestCase() {
         scenario.onFragment {
             this.sut = it
         }
-        Shadows.shadowOf(Looper.getMainLooper()).idle()
 
         this.interactorSpy = JokesBusinessLogicSpy()
         this.sut.interactor = this.interactorSpy
