@@ -6,19 +6,19 @@ import dev.beewise.jokes.models.user.User
 import java.io.Serializable
 
 class Joke(
-    var id: Int?,
-    var uuid: String?,
-    var text: String?,
-    var answer: String?,
+    var id: Int? = null,
+    var uuid: String? = null,
+    var text: String? = null,
+    var answer: String? = null,
     var likeCount: Int = 0,
     var dislikeCount: Int = 0,
     var commentCount: Int = 0,
-    var createdAt: String?,
-    var source: String?,
-    var type: Int?,
+    var createdAt: String? = null,
+    var source: String? = null,
+    var type: Int? = null,
     var status: Int = JokeStatus.pending.value,
-    var user: User?,
-    var like: Like?
+    var user: User? = null,
+    var like: Like? = null
     ): Serializable {
 
     fun isLiked(): Boolean {

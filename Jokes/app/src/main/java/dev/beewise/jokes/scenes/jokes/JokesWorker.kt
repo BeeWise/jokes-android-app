@@ -29,7 +29,7 @@ open class JokesWorker(delegate: JokesWorkerDelegate?) {
         this.delegate = WeakReference<JokesWorkerDelegate>(delegate)
     }
 
-    fun fetchJokes(page: Int, limit: Int, orderBy: Int) {
+    open fun fetchJokes(page: Int, limit: Int, orderBy: Int) {
         this.jokeTask.fetchJokes(JokeTaskModels.FetchJokes.Request(page, limit, orderBy, null, null), object : Result<JokeTaskModels.FetchJokes.Response> {
             override fun success(value: JokeTaskModels.FetchJokes.Response) {
                 this@JokesWorker.delegate?.get()?.successDidFetchJokes(value.jokes)
@@ -41,7 +41,7 @@ open class JokesWorker(delegate: JokesWorkerDelegate?) {
         })
     }
 
-    fun fetchUserAvatarImage(uuid: String?, imageUrl: String, isRounded: Boolean) {
+    open fun fetchUserAvatarImage(uuid: String?, imageUrl: String, isRounded: Boolean) {
         this.imageTask.fetchImageBitmap(ImageTaskModels.FetchImageBitmap.Request(imageUrl, isRounded), object : Result<ImageTaskModels.FetchImageBitmap.Response> {
             override fun success(value: ImageTaskModels.FetchImageBitmap.Response) {
                 this@JokesWorker.delegate?.get()?.successDidFetchUserAvatarImage(uuid, value.bitmap)
