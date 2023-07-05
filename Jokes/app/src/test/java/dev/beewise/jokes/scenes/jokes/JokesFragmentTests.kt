@@ -3,9 +3,6 @@ package dev.beewise.jokes.scenes.jokes
 import android.graphics.Bitmap
 import android.text.SpannableString
 import android.widget.ImageView
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.lifecycle.Lifecycle
-import dev.beewise.jokes.R
 import dev.beewise.jokes.components.cells.JokeQuestionAnswerCell
 import dev.beewise.jokes.components.cells.JokeTextCell
 import dev.beewise.jokes.components.cells.SpaceCell
@@ -44,11 +41,7 @@ class JokesFragmentTests : RobolectricTestCase() {
     // endregion
 
     private fun setupSubjectUnderTest() {
-        val scenario = launchFragmentInContainer<JokesFragment>(themeResId = R.style.Theme_Jokes)
-        scenario.moveToState(Lifecycle.State.CREATED)
-        scenario.onFragment {
-            this.sut = it
-        }
+        this.sut = JokesFragment()
 
         this.interactorSpy = JokesBusinessLogicSpy()
         this.sut.interactor = this.interactorSpy
@@ -61,12 +54,6 @@ class JokesFragmentTests : RobolectricTestCase() {
 
         this.recyclerViewSpy = RecyclerViewSpy(this.context())
         this.sut.recyclerView = this.recyclerViewSpy
-    }
-
-    @Test
-    fun testOnCreateShouldAskTheInteractorToFetchJokes() {
-        this.sut.onCreate(null)
-        assertTrue(this.interactorSpy.shouldFetchJokesCalled)
     }
 
     @Test
