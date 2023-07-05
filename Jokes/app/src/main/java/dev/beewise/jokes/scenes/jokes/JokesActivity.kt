@@ -9,7 +9,7 @@ import dev.beewise.jokes.R
 import dev.beewise.jokes.extensions.activity.setupFragment
 import java.lang.ref.WeakReference
 
-class JokesActivity: AppCompatActivity(), JokesFragmentDelegate {
+open class JokesActivity: AppCompatActivity(), JokesFragmentDelegate {
     private var fragment: WeakReference<JokesFragment>? = null
     var router: JokesRoutingLogic? = null
 

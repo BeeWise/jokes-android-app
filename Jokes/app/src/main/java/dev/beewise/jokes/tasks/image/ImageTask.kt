@@ -21,8 +21,8 @@ public interface ImageTaskProtocol: TaskProtocol {
     fun fetchImageBitmap(model: ImageTaskModels.FetchImageBitmap.Request, completionHandler: Result<ImageTaskModels.FetchImageBitmap.Response>)
 }
 
-class ImageTask(override var environment: TaskEnvironment): ImageTaskProtocol {
-    public var fetchImageBitmapOperationQueue = OperationQueue()
+open class ImageTask(override var environment: TaskEnvironment): ImageTaskProtocol {
+    private var fetchImageBitmapOperationQueue = OperationQueue()
     
     override fun fetchImageBitmap(model: ImageTaskModels.FetchImageBitmap.Request, completionHandler: Result<ImageTaskModels.FetchImageBitmap.Response>) {
         val operationModel = FetchImageBitmapOperationModels.Request(model.imageUrl, model.isRounded)
