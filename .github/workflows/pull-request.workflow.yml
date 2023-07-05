@@ -34,6 +34,14 @@ jobs:
       run: "echo 'KEY_STORE_FILE_PATH = path\nKEY_STORE_PASSWORD = password\nKEY_ALIAS = alias\nKEY_ALIAS_PASSWORD = password\nTASK_CONFIGURATOR_ENVIRONMENT = \"production\"\nOPERATION_LOGGING_ENABLED = \"false\"\nJOKES_ENDPOINT = \"endpoint\"' > production.properties"
       working-directory: Jokes/app
 
+    - name: "Gradle clean"
+      run: "./gradlew app:clean"
+      working-directory: Jokes
+
+    - name: "Gradle build debug"
+      run: "./gradlew app:buildDebug"
+      working-directory: Jokes
+
     - name: "Run tests"
       run: "./gradlew app:testDebugUnitTest"
       working-directory: Jokes

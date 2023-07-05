@@ -1,6 +1,5 @@
 package dev.beewise.jokes.test_cases
 
-/*
 import android.os.Build
 import junit.framework.TestCase
 import org.junit.Test
@@ -21,4 +20,3 @@ open class RobolectricTestCase: TestCase() {
 
     }
 }
-*/

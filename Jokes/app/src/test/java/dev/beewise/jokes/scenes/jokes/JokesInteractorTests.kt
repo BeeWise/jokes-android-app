@@ -6,13 +6,12 @@ import dev.beewise.jokes.models.user.User
 import dev.beewise.jokes.operations.base.errors.OperationError
 import dev.beewise.jokes.scenes.jokes.test_doubles.JokesPresentationLogicSpy
 import dev.beewise.jokes.scenes.jokes.test_doubles.JokesWorkerSpy
-//import dev.beewise.jokes.test_cases.RobolectricTestCase
-import junit.framework.TestCase
+import dev.beewise.jokes.test_cases.RobolectricTestCase
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-class JokesInteractorTests : TestCase() {
+class JokesInteractorTests : RobolectricTestCase() {
     lateinit var sut: JokesInteractor
     lateinit var presenterSpy: JokesPresentationLogicSpy
     lateinit var workerSpy: JokesWorkerSpy

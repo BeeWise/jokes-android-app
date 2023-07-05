@@ -1,6 +1,5 @@
 package dev.beewise.jokes.scenes.jokes
 
-/*
 import dev.beewise.jokes.scenes.jokes.test_doubles.JokesWorkerDelegateSpy
 import dev.beewise.jokes.tasks.spies.ImageTaskSpy
 import dev.beewise.jokes.tasks.spies.JokeTaskSpy
@@ -83,4 +82,3 @@ class JokesWorkerTests : RobolectricTestCase() {
         assertTrue(this.delegateSpy.failureDidFetchUserAvatarImageCalled)
     }
 }
-*/
