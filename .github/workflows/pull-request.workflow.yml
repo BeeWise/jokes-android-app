@@ -6,7 +6,7 @@ on:
 jobs:
   tests:
     name: "Unit tests"
-    runs-on: ubuntu-latest
+    runs-on: macOS-latest
 
     timeout-minutes: 60
 
@@ -16,7 +16,7 @@ jobs:
     - uses: actions/setup-java@v3
       with:
         distribution: 'adopt'
-        java-version: '11.0.11'
+        java-version: '11'
 
     - uses: gradle/gradle-build-action@v2
 
