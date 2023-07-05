@@ -1,6 +1,5 @@
 package dev.beewise.jokes.scenes.jokes
 
-/*
 import dev.beewise.jokes.scenes.jokes.test_doubles.JokesActivitySpy
 import dev.beewise.jokes.test_cases.RobolectricTestCase
 import org.junit.After
@@ -38,4 +37,3 @@ class JokesRouterTests : RobolectricTestCase() {
         assertTrue(this.activitySpy.finishCalled)
     }
 }
-*/
